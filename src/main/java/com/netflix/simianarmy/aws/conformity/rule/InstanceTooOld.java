@@ -41,11 +41,12 @@ import java.util.Map;
  * Instances are not considered to be permanent in the cloud, so sometimes having too old instances could indicate
  * potential issues.
  */
-public class InstanceTooOld implements ConformityRule {
+public class InstanceTooOld implements Instance {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstanceHasStatusUrl.class);
+    RULE_NAME = "InstanceTooOld";
 
-    private static final String RULE_NAME = "InstanceTooOld";
-    private final String reason;
+    //private static final String RULE_NAME = "InstanceTooOld";
+    //private final String reason;
     private final int instanceAgeThreshold;
 
     private AWSCredentialsProvider awsCredentialsProvider;
@@ -93,16 +94,6 @@ public class InstanceTooOld implements ConformityRule {
             }
         }
         return new Conformity(getName(), failedComponents);
-    }
-
-    @Override
-    public String getName() {
-        return RULE_NAME;
-    }
-
-    @Override
-    public String getNonconformingReason() {
-        return reason;
     }
 
     /**

@@ -42,10 +42,11 @@ import java.util.Map;
  * The class implementing a conformity rule that checks whether or not all instances in a cluster are in
  * specific security groups.
  */
-public class InstanceInSecurityGroup implements Instance {
+public class InstanceInSecurityGroup implements ConformityRule {
     private static final Logger LOGGER = LoggerFactory.getLogger(InstanceHasStatusUrl.class);
 
-    RULE_NAME = "InstanceInSecurityGroup";
+    private static final String RULE_NAME = "InstanceInSecurityGroup";
+    private final String reason;
 
     private final Collection<String> requiredSecurityGroupNames = Sets.newHashSet();
 
@@ -99,6 +100,16 @@ public class InstanceInSecurityGroup implements Instance {
             }
         }
         return new Conformity(getName(), failedComponents);
+    }
+
+    @Override
+    public String getName() {
+        return RULE_NAME;
+    }
+
+    @Override
+    public String getNonconformingReason() {
+        return reason;
     }
 
     /**
